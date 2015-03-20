@@ -8,7 +8,7 @@ $(document).ready(function()
 {
     var socket = io.connect('http://127.0.0.1:3000');
 
-    $("#fntsize,#fntfamily,#bckColor,#txtcolor").change(function(event){
+    $("#fntsize,#fntfamily,#bckColor,#txtcolor,#GPIIWebDome").change(function(event){
         if($("#updateAuto").is(':checked')){
           console.log('updateAuto = checked. New settings =  '+$(this).attr('name')+", value = "+$(this).val());
           var typeOfSetting = $(this).attr('name');

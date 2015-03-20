@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Light Control</title>
+        <!-- setting a proper encoding -->
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../stylesheets/moses13.css"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript" src="../javascripts/gpii.js"></script>
+        <script type="text/javascript" src="../javascripts/moses13.js"></script>
+        <script type="text/javascript" src="../javascripts/jquery-2.1.3.min.js"></script>
+        <link href="lightSwitch.html" rel="import">
+
+    </head>
+    <body>
+    <h1>Light Control</h1>
+        <section id="lights" >
+
+            <boolean-switch id="livingRoom" label="Living Room" socket-element="http://lightControl/livingroom/OnOFF" onChange="lightSwitched"></boolean-switch>
+
+            <login-penel></login-penel>
+
+        </section>
+    </body>
+</html>

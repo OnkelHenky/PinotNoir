@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<template id="descText">
+    <style>
+
+    </style>
+    <div class="outer">
+       <section id="textSection">
+           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <br>
+           At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <br>
+           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.  <br>
+           At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <br>
+       </section>
+        <div class="content">
+            <content></content>
+        </div>
+    </div>
+</template>
+
+<template id="descVideo">
+    <style>
+
+    </style>
+    <div class="outer">
+       <video  autoplay controls >
+           <source src="../templates/AccountNumber_Feldmann_low_ils.mp4" type="video/mp4" />
+       </video>
+        <div class="content">
+            <content>
+                <!-- label for="username">username</label -->
+
+            </content>
+        </div>
+    </div>
+</template>
+
+<script type="text/javascript">
+
+    document.MyStuff = document.MyStuff || {};
+
+    document.MyStuff.descr = {};
+
+
+
+    var r  =     document.MyStuff.descr;
+
+    r.mytestTemp = document.querySelector('link[href="../templates/wc-description.html"]');
+    r._import = r.mytestTemp.import;
+
+    var _myStuff = document.MyStuff;
+
+    r.descr_proto =  Object.create(HTMLElement.prototype, {
+        createdCallback: {
+            value: function () {
+                this.shadow = this.createShadowRoot();
+                var template = r._import.querySelector('#descText');
+                var clone = document.importNode(template.content, true);
+                _myStuff.shadow = this.shadow;
+                this.shadow.appendChild(clone);
+            }
+        },
+        updateTheShadowDOM: {
+            value : function(querySelectorOfnewShadowDOMlement) {
+                var template = r._import.querySelector(querySelectorOfnewShadowDOMlement);
+                var clone = document.importNode(template.content, true);
+
+                while (this.shadow.hasChildNodes()) {
+                    this.shadow.removeChild(this.shadow.lastChild);
+                }
+                this.shadow.appendChild(clone);
+            }
+        }
+    });
+
+
+    _myStuff.descr = document.registerElement('pinot-description', {
+        prototype: r.descr_proto
+    });
+
+</script>
+</html>
+

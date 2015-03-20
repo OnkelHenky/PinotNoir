@@ -4,9 +4,9 @@
  * Date: 20.02.13
  */
 
-exports.startTheMagic = function(withServer){
+exports.startTheMagic = function(io){
 
-    var io = require("socket.io").listen(withServer);
+   //var io = require("socket.io").listen(withServer);
 
     io.sockets.on('connection', function (socket) {
 

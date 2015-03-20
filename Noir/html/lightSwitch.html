@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" src="../javascripts/jquery-2.1.3.min.js"></script>
+
+<template id="checkBoxLight">
+    <style>
+        .outer {
+            width: 13em;
+            text-align: center;
+        }
+
+        .outer span{
+            color: lightslategrey;
+        }
+
+
+    </style>
+    <script>
+
+        function swapTheStuff(ele, comp){
+
+            if(ele.checked){
+                comp.isChecked = true;
+                sendCommand("ON");
+            }else{
+                comp.isChecked = false;
+                sendCommand("OFF");
+            }
+        }
+
+        function changeOnTrue(ele, comp){
+
+            if( comp.isChecked ){
+                ele.checked = true;
+            }
+
+        }
+
+        function sendCommand( txtCommand )
+        {
+            console.log('sendCommand');
+
+            var request = $.ajax
+            ({
+                type       : "POST",
+                url        : "http://127.0.0.1:8080/rest/items/Toggle_1",
+                data       : txtCommand,
+                headers    : { 'Content-Type': 'text/plain' }
+            });
+
+            request.done( function(data)
+            {
+                console.log( "Success: Status=" + data );
+            });
+
+            request.fail( function(jqXHR, textStatus )
+            {
+                console.log( "Failure: " + textStatus );
+            });
+        }
+
+    </script>
+    <div id="outer" class="outer">
+        <section id="boolContent">
+          <label for="lightSwitch"> </label>
+          <input id="lightSwitch" type="checkbox" value="Living Room" >
+        </section>
+        <div class="content">
+            <content></content>
+        </div>
+    </div>
+</template>
+
+<template id="altSwitch">
+    <style>
+
+        #boolContent{
+            width: 20em;
+        }
+
+        #label{
+            float: right;
+            margin-top: 10%;
+        }
+    </style>
+    <script>
+       function swapTheStuff(ele, comp){
+
+
+           var _currentImage = ele.src.split("/");
+           var _img = _currentImage[_currentImage.length -1];
+
+           if(_img === "OFF.png"){
+               ele.src = "./images/ON_Style1.png";
+               ele.alt= "The light in the" + +  "is off, click to switch it on.";
+               comp.isChecked = true;
+               sendCommand("ON");
+
+           }else if( _img === "ON_Style1.png"){
+               ele.src = "./images/OFF.png";
+               comp.isChecked = false;
+               sendCommand("OFF");
+           }else{
+               ele.src = "./images/OFF.png";
+               comp.isChecked = false;
+               sendCommand("OFF");
+           }
+
+
+       }
+
+
+       function changeOnTrue(ele, comp){
+
+           swapTheStuff(ele, comp);
+
+       }
+
+       function sendCommand( txtCommand )
+       {
+           console.log('sendCommand Img');
+           var request = $.ajax
+           ({
+               type       : "POST",
+               url        : "http://127.0.0.1:8080/rest/items/Toggle_1",
+               data       : txtCommand,
+               headers    : { 'Content-Type': 'text/plain' }
+           });
+
+           request.done( function(data)
+           {
+               console.log( "Success: Status=" + data );
+           });
+
+           request.fail( function(jqXHR, textStatus )
+           {
+               console.log( "Failure: " + textStatus );
+           });
+       }
+
+    </script>
+    <div id="outer">
+        <section id="boolContent">
+            <label id="label" for="lightSwitch"> </label>
+            <img id="lightSwitch" src="./images/OFF.png" alt="The light is off, click to switch it on." >
+        </section>
+        <div class="content">
+            <content>
+                <!-- label for="username">username</label -->
+
+            </content>
+        </div>
+    </div>
+</template>
+
+<script type="text/javascript">
+
+    document.MyStuff = document.MyStuff || {};
+
+    document.MyStuff.f = {};
+
+    var t  =     document.MyStuff.f;
+
+
+
+    t.mytestTemp = document.querySelector('link[href="lightSwitch.html"]');
+    t._import = t.mytestTemp.import;
+
+    var _myStuff = document.MyStuff;
+
+    t.b_input_proto =  Object.create(HTMLElement.prototype, {
+
+
+        createdCallback: {
+            value: function () {
+                this.shadow = this.createShadowRoot();
+                var template = t._import.querySelector('#checkBoxLight');
+                var clone = document.importNode(template.content, true);
+                _myStuff.shadow = this.shadow;
+                this.shadow.appendChild(clone);
+
+
+            }
+        },
+        attachedCallback: {
+            value: function () {
+                var _label = this.getAttribute('label'),  // Getting the label text
+                    _class = this.getAttribute('class');  // Getting the CSS class information
+
+                var _lableElementInShadowDOM = this.shadow.querySelector('#boolContent label'),
+                    _outer = this.shadow.querySelector('#outer');
+
+                _lableElementInShadowDOM.textContent = _label;
+                _outer.className = _class;
+
+
+                var change = this.getAttribute('onChange');
+                var x = window[change];
+
+                var self = this;
+
+                if(this.isChecked) {
+                    changeOnTrue(this.shadow.querySelector('#lightSwitch'), self);
+                }
+
+                this.shadow.querySelector('#lightSwitch')
+                        .addEventListener('click', function(){
+
+                            swapTheStuff(this, self);
+
+                            x(self);
+                        } , true);
+
+
+            }
+        },
+        updateClickHandlerComponent: {
+            value : function(S_nameOFListener) {
+
+
+                var _label = this.getAttribute('label'),  // Getting the label text
+                 _class = this.getAttribute('class');  // Getting the CSS class information
+
+                var _lableElementInShadowDOM = this.shadow.querySelector('#boolContent label'),
+                        _outer = this.shadow.querySelector('#outer');
+
+                _lableElementInShadowDOM.textContent = _label;
+                _outer.className = _class;
+
+
+                var change = this.getAttribute('onChange');
+                var x = window[change];
+
+                var self = this;
+
+                if(this.isChecked) {
+                    changeOnTrue(this.shadow.querySelector('#lightSwitch'), self);
+                }
+
+                this.shadow.querySelector('#lightSwitch')
+                        .addEventListener('click', function(){
+                            swapTheStuff(this, self);
+                            x(self);
+                        } , true);
+
+                /*
+
+                 var content = this.shadow.querySelector('#login');
+                 var loginHandler = this.getAttribute('loginHandler');
+
+                 content.querySelector('#loginb')
+                 .addEventListener('click', window[loginHandler] , true)
+                 */
+
+            }
+
+
+        },
+        updateTheShadowDOM: {
+            value : function(querySelectorOfnewShadowDOMlement) {
+                var template = t._import.querySelector(querySelectorOfnewShadowDOMlement);
+                var clone = document.importNode(template.content, true);
+
+
+
+                while (this.shadow.hasChildNodes()) {
+                    this.shadow.removeChild(this.shadow.lastChild);
+                }
+                this.shadow.appendChild(clone);
+
+
+            }
+        }
+    });
+
+
+    _myStuff.binput = document.registerElement('boolean-switch', {
+        prototype: t.b_input_proto
+    });
+
+    _myStuff.binput.isChecked = false;
+
+
+</script>
+</html>
+
