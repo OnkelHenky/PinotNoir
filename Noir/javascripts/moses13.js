@@ -21,8 +21,6 @@
 
                 }
 
-
-
                 //_lightSwitch.updateTheShadowDOM('#checkBoxLight');
 
             }else if('paul' === user){
