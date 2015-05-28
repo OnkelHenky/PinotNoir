@@ -50,6 +50,28 @@
 
     var _myStuff = document.MyStuff;
 
+    function getZeConnection(){
+
+        try{
+
+            var socket = io.connect('http://127.0.0.1:3000');
+
+            socket.on('gpii_update', function (data) {
+                console.log("getting a GPII (settings) update"+data);
+                console.dir(data);
+              //  window.UserSettingListener(data); /*Calling UserSettingListener if any (new) are available*/
+            });
+
+            console.log('socket');
+            console.dir(socket);
+
+
+        }catch(ex){
+            console.log('exception occurred ' +ex);
+
+        }
+    }
+
     r.descr_proto =  Object.create(HTMLElement.prototype, {
         createdCallback: {
             value: function () {
@@ -58,6 +80,8 @@
                 var clone = document.importNode(template.content, true);
                 _myStuff.shadow = this.shadow;
                 this.shadow.appendChild(clone);
+
+                getZeConnection();
             }
         },
         updateTheShadowDOM: {

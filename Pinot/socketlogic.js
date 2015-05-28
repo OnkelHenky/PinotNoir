@@ -16,6 +16,7 @@ exports.startTheMagic = function(io){
         console.dir(data);
         console.log('++++++++++++++++++++++++++++++++++');
         socket.broadcast.emit('settings_update', data);
+        socket.broadcast.emit('gpii_update', data);
     });
   });
 };
