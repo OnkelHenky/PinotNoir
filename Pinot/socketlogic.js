@@ -10,12 +10,14 @@ exports.startTheMagic = function(io){
 
     io.sockets.on('connection', function (socket) {
 
-    socket.on('pushUIUpdate', function(data){
+        console.log('On Connection');
+
+        socket.on('pushUIUpdate', function(data){
         console.log('++++++++++++++++++++++++++++++++++');
         console.log('Emitting new settings update to the clients.');
         console.dir(data);
         console.log('++++++++++++++++++++++++++++++++++');
-        socket.broadcast.emit('settings_update', data);
+      //  socket.broadcast.emit('settings_update', data);
         socket.broadcast.emit('gpii_update', data);
     });
   });

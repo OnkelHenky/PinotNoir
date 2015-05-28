@@ -50,7 +50,7 @@
 
     var _myStuff = document.MyStuff;
 
-    function getZeConnection(){
+    function getZeConnection(comp){
 
         try{
 
@@ -59,10 +59,20 @@
             socket.on('gpii_update', function (data) {
                 console.log("getting a GPII (settings) update"+data);
                 console.dir(data);
-              //  window.UserSettingListener(data); /*Calling UserSettingListener if any (new) are available*/
+
+                if(data.hasOwnProperty('GPIIWebDome')){
+                    var user = data.GPIIWebDome;
+
+                    if('anna' === user){
+                        comp.updateTheShadowDOM('#descText');
+                    }else if('paul' === user){
+                        comp.updateTheShadowDOM('#descVideo');
+                    }
+                }
+
             });
 
-            console.log('socket');
+            console.log('Socket in der Compoenent');
             console.dir(socket);
 
 
@@ -81,7 +91,7 @@
                 _myStuff.shadow = this.shadow;
                 this.shadow.appendChild(clone);
 
-                getZeConnection();
+                getZeConnection(this);
             }
         },
         updateTheShadowDOM: {
