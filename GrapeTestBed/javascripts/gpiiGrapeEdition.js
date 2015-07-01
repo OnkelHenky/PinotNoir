@@ -13,13 +13,13 @@
         console.log('socket.io.js loaded!');
         var clientSocketScriptTag = document.createElement("script");
             clientSocketScriptTag.type = "text/javascript";
-            clientSocketScriptTag.src = "http://localhost:3000/javascripts/clientSocket.js";
+            clientSocketScriptTag.src = "http://localhost:3030/javascripts/clientSocket.js";
             clientSocketScriptTag.onload =  function () {
             console.log('clientSocket.js loaded!');
             };
         $("head").append(clientSocketScriptTag);
     };
     document.getElementsByTagName('head')[0].appendChild(socketIOScriptTag);
-    socketIOScriptTag.src = "http://localhost:3000/socket.io/socket.io.js";
+    socketIOScriptTag.src = "http://localhost:3030/socket.io/socket.io.js";
 
 })();

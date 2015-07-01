@@ -49,6 +49,16 @@ app.get('/users', user.list);
 app.get('/ic/web/service', user.ic);
 app.get('/altIndex',routes.altIndex);
 
+app.use('/reloadStuff/*',function(req,res){
+
+    var _loadParam = req.params[0];
+
+
+    res.writeHead(200);
+    res.end();
+
+
+});
 
 app.use('/switch/*', function(req, res) {
     console.log('Request from Moses13', req.params[0]);
@@ -77,8 +87,7 @@ app.use('/switch/*', function(req, res) {
         case "00":
              break;
         default:
-            break;
-
+            //break;
     }
 
     console.log(_websteckdoserequest);

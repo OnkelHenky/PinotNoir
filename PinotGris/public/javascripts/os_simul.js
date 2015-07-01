@@ -6,7 +6,7 @@
 
 $(document).ready(function()
 {
-    var socket = io.connect('http://127.0.0.1:3000');
+    var socket = io.connect('http://127.0.0.1:3030');
 
     $("#fntsize,#fntfamily,#bckColor,#txtcolor,#GPIIWebDome").change(function(event){
         if($("#updateAuto").is(':checked')){
