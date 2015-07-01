@@ -64,7 +64,8 @@
             callback();
         };
         document.getElementsByTagName('head')[0].appendChild(htmlImportTag);
-        htmlImportTag.href = "http://localhost:63342/PinotNoir/Noir/html/remoteTemplate.html";
+        htmlImportTag.href = "http://127.0.0.1:3030//html/remoteTemplate.html";
+       // htmlImportTag.href = "http://127.0.0.1:3030/corsRR";
 
     }
 
@@ -89,7 +90,7 @@
                     }else {
 
                         loadTemplate(function(){
-                            var xx = document.querySelector('link[href="http://localhost:63342/PinotNoir/Noir/html/remoteTemplate.html"]');
+                            var xx = document.querySelector('link[href="http://127.0.0.1:3030//html/remoteTemplate.html"]');
                             reloadImport = xx.import;
 
                             console.dir(reloadImport);
